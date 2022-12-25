@@ -1,160 +1,452 @@
+@php
+$prefix = Request::route()->getPrefix();
+$route = Route::current()->getName();
+
+@endphp
+
+
 <aside class="main-sidebar">
     <!-- sidebar-->
     <section class="sidebar">
 
         <div class="user-profile">
-			<div class="ulogo">
-				 <a href="index.html">
-				  <!-- logo for regular state and mobile devices -->
-					 <div class="d-flex align-items-center justify-content-center">
-						  <img src="{{ asset('backend/images/logo-dark.png') }}" alt="">
-						  <h3><b>Easy</b> Shop</h3>
-					 </div>
-				</a>
-			</div>
+            <div class="ulogo">
+                <a href="index.html">
+                    <!-- logo for regular state and mobile devices -->
+                    <div class="d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('backend/images/logo-dark.png') }}" alt="">
+                        <h3><b>Easy</b> Shop</h3>
+                    </div>
+                </a>
+            </div>
         </div>
 
-      <!-- sidebar menu-->
-      <ul class="sidebar-menu" data-widget="tree">
+        <!-- sidebar menu-->
+        <ul class="sidebar-menu" data-widget="tree">
 
-		<li>
-          <a href="index.html">
-            <i data-feather="pie-chart"></i>
-			<span>Dashboard</span>
-          </a>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="message-circle"></i>
-            <span>Brands</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{route('brand.ail')}}"><i class="ti-more"></i>Brand Ail</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="mail"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="mailbox_inbox.html"><i class="ti-more"></i>Inbox</a></li>
-            <li><a href="mailbox_compose.html"><i class="ti-more"></i>Compose</a></li>
-            <li><a href="mailbox_read_mail.html"><i class="ti-more"></i>Read</a></li>
-          </ul>
-        </li>
-
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="file"></i>
-            <span>Pages</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="profile.html"><i class="ti-more"></i>Profile</a></li>
-            <li><a href="invoice.html"><i class="ti-more"></i>Invoice</a></li>
-            <li><a href="gallery.html"><i class="ti-more"></i>Gallery</a></li>
-            <li><a href="faq.html"><i class="ti-more"></i>FAQs</a></li>
-            <li><a href="timeline.html"><i class="ti-more"></i>Timeline</a></li>
-          </ul>
-        </li>
-
-        <li class="header nav-small-cap">User Interface</li>
-
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="grid"></i>
-            <span>Components</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="components_alerts.html"><i class="ti-more"></i>Alerts</a></li>
-            <li><a href="components_badges.html"><i class="ti-more"></i>Badge</a></li>
-            <li><a href="components_buttons.html"><i class="ti-more"></i>Buttons</a></li>
-
-          </ul>
-        </li>
-
-		<li class="treeview">
-          <a href="#">
-            <i data-feather="credit-card"></i>
-            <span>Cards</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-			<li><a href="card_advanced.html"><i class="ti-more"></i>Advanced Cards</a></li>
-			<li><a href="card_basic.html"><i class="ti-more"></i>Basic Cards</a></li>
-			<li><a href="card_color.html"><i class="ti-more"></i>Cards Color</a></li>
-		  </ul>
-        </li>
-
-
-		<li class="header nav-small-cap">EXTRA</li>
-
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="layers"></i>
-			<span>Multilevel</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Level One</a></li>
-            <li class="treeview">
-              <a href="#">Level One
-                <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#">Level Two</a></li>
-                <li class="treeview">
-                  <a href="#">Level Two
-                    <span class="pull-right-container">
-					  <i class="fa fa-angle-right pull-right"></i>
-					</span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#">Level Three</a></li>
-                    <li><a href="#">Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
+            <li class="{{ $route == 'dashboard' ? 'active' : '' }}">
+                <a href="{{ url('admin/dashboard') }}">
+                    <i data-feather="pie-chart"></i>
+                    <span>Dashboard</span>
+                </a>
             </li>
-            <li><a href="#">Level One</a></li>
-          </ul>
-        </li>
 
-		<li>
-          <a href="auth_login.html">
-            <i data-feather="lock"></i>
-			<span>Log Out</span>
-          </a>
-        </li>
+            @php
+                $brand =(auth()->guard('admin')->user()->brand == 1);
+                $category =(auth()->guard('admin')->user()->category == 1);
+                $product =(auth()->guard('admin')->user()->product == 1);
+                $slider =(auth()->guard('admin')->user()->slider == 1);
+                $coupons =(auth()->guard('admin')->user()->coupons == 1);
+                $shipping =(auth()->guard('admin')->user()->shipping == 1);
+                $blog =(auth()->guard('admin')->user()->blog == 1);
+                $Setting =(auth()->guard('admin')->user()->Setting == 1);
+                $returnorder =(auth()->guard('admin')->user()->returnorder == 1);
+                $review =(auth()->guard('admin')->user()->review == 1);
+                $orders =(auth()->guard('admin')->user()->orders == 1);
+                $stock =(auth()->guard('admin')->user()->stock == 1);
+                $reports =(auth()->guard('admin')->user()->reports == 1);
+                $alluser =(auth()->guard('admin')->user()->alluser == 1);
+                $adminuserrole =(auth()->guard('admin')->user()->adminuserrole == 1);
+            @endphp
 
-      </ul>
+              {{-- start brand --}}
+
+            @if ($brand ==  true)
+                  
+            
+
+                    <li class=" treeview {{ $prefix == '/brand' ? 'active' : '' }}">
+                        <a href="#">
+                            <i data-feather="message-circle"></i>
+                            <span>Brands</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-right pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li {{ $route == '/view' ? 'active' : '' }}><a href="{{ route('brand.ail') }}"><i
+                                        class="ti-more"></i>Brand Ail</a></li>
+                        </ul>
+                    </li>
+                    @else
+                    @endif
+                    {{-- end brand --}}
+         
+
+             {{-- start Category --}}
+             @if ($category ==  true)
+            <li class=" treeview {{ $prefix == '/Category' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="mail"></i> <span>Category</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ $route == '/view' ? 'active' : '' }}"><a href="{{ route('category.ail') }}"><i
+                                class="ti-more"></i>Category Ail</a></li>
+                    <li class="{{ $route == '/subview' ? 'active' : '' }}"><a
+                            href="{{ route('ail.subcategory') }}"><i class="ti-more"></i>SubCategory</a></li>
+                    <li class="{{ $route == '/sub_subview' ? 'active' : '' }}"><a
+                            href="{{ route('ail.sub_subcategory') }}"><i class="ti-more"></i>Sub_SubCategory</a></li>
+
+                </ul>
+            </li>
+            @else
+            @endif
+            {{-- end Category --}}
+
+         
+
+            {{-- start Product --}}
+            @if ($product ==  true)
+            <li class=" treeview {{ $prefix == '/Product' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Products</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="{{ $route == '/add-product' ? 'active' : '' }}"><a
+                            href="{{ route('add-product') }}"><i class="ti-more"></i>Add Products</a></li>
+                            <li class="{{ $route == '/Manage-product' ? 'active' : '' }}"><a
+                                href="{{ route('Manage-product') }}"><i class="ti-more"></i>Manage Products</a></li>
+
+                </ul>
+            </li>
+            @else
+            @endif
+            {{-- end Product --}}
+
+            {{-- start slider --}}
+            @if ($slider ==  true)
+            <li class=" treeview {{ $prefix == '/slider' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Slider</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                            <li class="{{ $route == '/Manage-slider' ? 'active' : '' }}"><a
+                                href="{{ route('Manage-slider') }}"><i class="ti-more"></i>Manage slider</a></li>
+
+                </ul>
+            </li>
+            @else
+            @endif
+             {{-- end slider --}}
+
+              {{-- start Coupons --}}
+              @if ($coupons ==  true)
+            <li class=" treeview {{ $prefix == '/Coupons' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Coupon</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                            <li class="{{ $route == '/Manage-Coupons' ? 'active' : '' }}"><a
+                                href="{{ route('Manage-Coupons') }}"><i class="ti-more"></i>Manage Coupons</a></li>
+
+                </ul>
+            </li>
+            @else
+            @endif
+             {{-- end Coupons --}}
+
+               {{-- start shipping --}}
+               @if ($shipping ==  true)
+            <li class=" treeview {{ $prefix == '/shipping' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Shipping Area</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/Manage-division' ? 'active' : '' }}"><a
+                                   href="{{ route('Manage-division') }}"><i class="ti-more"></i>Ship Division</a></li>
+
+
+                                   <li class="{{ $route == '/Manage-district' ? 'active' : '' }}"><a
+                                    href="{{ route('Manage-district') }}"><i class="ti-more"></i>Ship District</a></li>
+
+                                   <li class="{{ $route == '/Manage-state' ? 'active' : '' }}"><a
+                                    href="{{ route('Manage-state') }}"><i class="ti-more"></i>Ship State</a></li>
+
+                            </ul>
+            </li>
+            @else
+            @endif
+
+             {{-- end shipping --}}
+
+              {{-- start blog --}}
+              @if ($blog ==  true)
+            <li class=" treeview {{ $prefix == '/blog' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Manage Blog</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/category.blog' ? 'active' : '' }}"><a
+                                   href="{{ route('category.blog') }}"><i class="ti-more"></i>Blog Category</a></li>
+                                   <li class="{{ $route == '/list.post' ? 'active' : '' }}"><a
+                                    href="{{ route('list.post') }}"><i class="ti-more"></i> List Blog Post</a></li>
+
+                                   <li class="{{ $route == '/view.post' ? 'active' : '' }}"><a
+                                    href="{{ route('add.post') }}"><i class="ti-more"></i> Add Blog Post</a></li>
+
+
+                            </ul>
+            </li>
+            @else
+            @endif
+             {{-- end blog --}}
+
+            {{-- site setting --}}
+            @if ($Setting ==  true)
+            <li class=" treeview {{ $prefix == '/Setting' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Manage Setting</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/site.setting' ? 'active' : '' }}"><a
+                                   href="{{ route('site.setting') }}"><i class="ti-more"></i>Site Setting</a></li>
+
+                                   <li class="{{ $route == '/seo.setting' ? 'active' : '' }}"><a
+                                    href="{{ route('seo.setting') }}"><i class="ti-more"></i>Seo Setting</a></li>
+
+
+
+                            </ul>
+            </li>
+            @else
+            @endif
+             {{-- end site setting --}}
+
+
+               {{-- site return oreder --}}
+               @if ($returnorder ==  true)
+            <li class=" treeview {{ $prefix == '/return' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Return Order</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/return.request' ? 'active' : '' }}"><a
+                                   href="{{ route('return.request') }}"><i class="ti-more"></i>Return Request</a></li>
+
+                                   <li class="{{ $route == '/all.request' ? 'active' : '' }}"><a
+                                    href="{{ route('all.request') }}"><i class="ti-more"></i>All Request</a></li>
+
+
+
+                            </ul>
+            </li>
+            @else
+            @endif
+             {{-- end return oreder --}}
+
+                 {{-- site review --}}
+                 @if ($review ==  true)
+            <li class=" treeview {{ $prefix == '/review' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Manage Review</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/return.request' ? 'active' : '' }}"><a
+                                   href="{{ route('pending.review') }}"><i class="ti-more"></i>Pending Review</a></li>
+
+                                   <li class="{{ $route == '/all.request' ? 'active' : '' }}"><a
+                                    href="{{ route('publish.review') }}"><i class="ti-more"></i>Publish Review</a></li>
+
+
+
+                            </ul>
+            </li>
+            @else
+            @endif
+             {{-- end review --}}
+
+
+            <li class="header nav-small-cap">User Interface</li>
+
+              {{-- start shipping --}}
+              @if ($orders ==  true)
+              <li class=" treeview {{ $prefix == '/orders' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Orders</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/pending-orders' ? 'active' : '' }}"><a
+                                   href="{{ route('pending-orders') }}"><i class="ti-more"></i>Pending Orders</a></li>
+
+
+                                   <li class="{{ $route == '/confirmed-orders' ? 'active' : '' }}"><a
+                                    href="{{ route('confirmed-orders') }}"><i class="ti-more"></i>Confirmed Orders</a></li>
+
+                                    <li class="{{ $route == '/processing-orders' ? 'active' : '' }}"><a
+                                        href="{{ route('processing-orders') }}"><i class="ti-more"></i>Processing Orders</a></li>
+
+                                        <li class="{{ $route == '/picked-orders' ? 'active' : '' }}"><a
+                                            href="{{ route('picked-orders') }}"><i class="ti-more"></i>Picked Orders</a></li>
+
+
+                                            <li class="{{ $route == '/shipped-orders' ? 'active' : '' }}"><a
+                                                href="{{ route('shipped-orders') }}"><i class="ti-more"></i>Shipped Orders</a></li>
+
+
+                                            <li class="{{ $route == '/delivered-orders' ? 'active' : '' }}"><a
+                                                href="{{ route('delivered-orders') }}"><i class="ti-more"></i>Delivered Orders</a></li>
+
+                                                <li class="{{ $route == '/cancel-orders' ? 'active' : '' }}"><a
+                                                    href="{{ route('cancel-orders') }}"><i class="ti-more"></i>Cancel Orders</a></li>
+
+                            </ul>
+            </li>
+            @else
+            @endif
+             {{-- end Orders --}}
+
+
+
+               {{-- Start Stock  --}}
+               @if ($stock ==  true)
+            <li class=" treeview {{ $prefix == '/stock' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Manage Stock</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/all-reports' ? 'active' : '' }}"><a
+                                   href="{{ route('product.stock') }}"><i class="ti-more"></i>Product Stock </a></li>
+
+
+                </ul>
+            </li>
+            @else
+            @endif
+            {{-- End All Reports  --}}
+
+             {{-- Start All Reports  --}}
+             @if ($reports ==  true)
+            <li class=" treeview {{ $prefix == '/reports' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>All Reports</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                                   <li class="{{ $route == '/all-reports' ? 'active' : '' }}"><a
+                                   href="{{ route('all-reports') }}"><i class="ti-more"></i>All Reports</a></li>
+
+
+                </ul>
+            </li>
+            @else
+            @endif
+            {{-- End All Reports  --}}
+
+
+              {{-- Start All Users  --}}
+              @if ($alluser ==  true)
+
+              <li class=" treeview {{ $prefix == '/alluser' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>All Users</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                     <li class="{{ $route == '/all-users' ? 'active' : '' }}"><a
+                      href="{{ route('all-users') }}"><i class="ti-more"></i>All Users</a></li>
+
+
+                </ul>
+            </li>
+            @else
+            @endif
+            {{-- End All Users  --}}
+
+              {{-- Start All Users  --}}
+              @if ($adminuserrole ==  true)
+              <li class=" treeview {{ $prefix == '/adminuserrole' ? 'active' : '' }}">
+                <a href="#">
+                    <i data-feather="file"></i>
+                    <span>Admin User Role</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+
+                     <li class="{{ $route == '/all-users' ? 'active' : '' }}"><a
+                      href="{{ route('all.admin.users') }}"><i class="ti-more"></i>All Admin  User</a></li>
+
+
+                </ul>
+            </li>
+
+            @else
+            @endif
+            {{-- End All Users  --}}
+
+
     </section>
 
-	<div class="sidebar-footer">
-		<!-- item-->
-		<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Settings" aria-describedby="tooltip92529"><i class="ti-settings"></i></a>
-		<!-- item-->
-		<a href="mailbox_inbox.html" class="link" data-toggle="tooltip" title="" data-original-title="Email"><i class="ti-email"></i></a>
-		<!-- item-->
-		<a href="javascript:void(0)" class="link" data-toggle="tooltip" title="" data-original-title="Logout"><i class="ti-lock"></i></a>
-	</div>
-  </aside>
+    <div class="sidebar-footer">
+        <!-- item-->
+        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title=""
+            data-original-title="Settings" aria-describedby="tooltip92529"><i class="ti-settings"></i></a>
+        <!-- item-->
+        <a href="mailbox_inbox.html" class="link" data-toggle="tooltip" title=""
+            data-original-title="Email"><i class="ti-email"></i></a>
+        <!-- item-->
+        <a href="javascript:void(0)" class="link" data-toggle="tooltip" title=""
+            data-original-title="Logout"><i class="ti-lock"></i></a>
+    </div>
+</aside>
